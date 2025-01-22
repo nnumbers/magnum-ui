@@ -110,7 +110,7 @@
 
         // Only load templates that are greater than the current template (kube tag comparison)
         clusterTemplates.forEach(function(template) {
-          if (isVersionGreater(activeTemplateVersion, template.labels.kube_tag)) {
+          if (isVersionGreater(template.labels.kube_tag, activeTemplateVersion)) {
             clusterTemplatesTitleMap.push({
               value: template.id,
               name: template.name
@@ -218,10 +218,14 @@
     function isVersionGreater(v1, v2) {
       if (!v1 || !v2) { return null; }
 
-      // Strip the 'v' if prefixed in the version
-      if (v1[0] === 'v') { v1 = v1.substr(1); }
-      if (v2[0] === 'v') { v2 = v2.substr(1); }
-      return utils.versionCompare(v1, v2) < 0;
+      // when the values are like v1.26.7-rancher, even after remove prefix v,
+      // utils.versionCompare returns NaN, because of suffix. So, its needed to
+      // take only the version parts
+      const regexp = /v?(\d+\.\d+\.\d+)(\-[A-Za-z]*)?/g;
+      const v1Part = Array.from(v1.matchAll(regexp), m => m[1])[0];
+      const v2Part = Array.from(v2.matchAll(regexp), m => m[1])[0];
+
+      return utils.versionCompare(v1Part, v2Part) > 0;
     }
 
   }
