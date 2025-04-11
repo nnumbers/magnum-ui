@@ -54,11 +54,11 @@
     function perform(selected) {
       // get config
       return magnum.getClusterConfig(selected.id).then(function(response) {
-        if (typeof response.data.key !== "undefined") {
-          textDownload.downloadTextFile(response.data.key, selected.name + "_key.pem");
-          textDownload.downloadTextFile(response.data.ca, selected.name + "_ca.pem");
-          textDownload.downloadTextFile(response.data.cert, selected.name + "_cert.pem");
-        }
+        // if ( response.data.key !== undefined ) {
+        //   textDownload.downloadTextFile(response.data.key, selected.name + "_key.pem");
+        //   textDownload.downloadTextFile(response.data.ca, selected.name + "_ca.pem");
+        //   textDownload.downloadTextFile(response.data.cert, selected.name + "_cert.pem");
+        // }
         textDownload.downloadTextFile(response.data.cluster_config, selected.name + "_config");
         var result = actionResult.getActionResult()
                      .created(resourceType, selected.id);

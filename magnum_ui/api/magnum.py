@@ -209,7 +209,7 @@ def cluster_config(request, id):
     opts = {
         'cluster_uuid': cluster.uuid,
     }
-    tls = {}
+    tls = None
     if not cluster_template.tls_disabled:
         tls = client_utils.generate_csr_and_key()
         tls["ca"] = magnumclient(request).certificates.get(**opts).pem
@@ -217,10 +217,11 @@ def cluster_config(request, id):
         tls["cert"] = magnumclient(request).certificates.create(**opts).pem
 
     config = client_utils.config_cluster(
-        cluster, cluster_template, cfg_dir="", direct_output=True
+        cluster, cluster_template, cfg_dir="", certs=tls, direct_output=True
     )
     result = {"cluster_config": config}
-    result.update(tls)
+    # if tls is not None:
+    #   result.update(tls)
     return result
 
 
