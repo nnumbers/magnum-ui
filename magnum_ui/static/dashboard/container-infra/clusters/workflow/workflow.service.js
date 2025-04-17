@@ -91,13 +91,13 @@
           'master_flavor_id': { type: 'string' },
           'node_count': {
             type: 'number',
-            minimum: 0
+            minimum: 1
           },
           'flavor_id': { type: 'string' },
           'auto_scaling_enabled': { type: 'boolean' },
           'min_node_count': {
             type: 'number',
-            minimum: 0
+            minimum: 1
           },
           'max_node_count': { type: 'number' },
 
@@ -490,15 +490,15 @@
           keypair: '',
           addons: [],
 
-          master_count: null,
+          master_count: 3,
           master_flavor_id: '',
           node_count: null,
           flavor_id: '',
-          auto_scaling_enabled: false,
+          auto_scaling_enabled: true,
           min_node_count: null,
           max_node_count: null,
 
-          master_lb_enabled: false,
+          master_lb_enabled: true,
           create_network: true,
           fixed_network: '',
           fixed_subnet: '',
