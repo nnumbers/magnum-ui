@@ -234,7 +234,7 @@ class ClusterResize(generic.View):
         try:
             cluster = magnum.cluster_show(request, cluster_id).to_dict()
         except AttributeError as e:
-            print(e)
+            LOG.exception(e)
             return HttpResponseNotFound()
 
         stack = heat.stack_get(request, cluster["stack_id"])
