@@ -216,16 +216,17 @@
     }
 
     function isVersionGreater(v1, v2) {
-      if (!v1 || !v2) { return null; }
+      if (!v1 || !v2) { return false; }
 
-      // when the values are like v1.26.7-rancher, even after remove prefix v,
-      // utils.versionCompare returns NaN, because of suffix. So, its needed to
-      // take only the version parts
-      const regexp = /v?(\d+\.\d+\.\d+)(\-[A-Za-z]*)?/g;
-      const v1Part = Array.from(v1.matchAll(regexp), m => m[1])[0];
-      const v2Part = Array.from(v2.matchAll(regexp), m => m[1])[0];
+      // // when the values are like v1.26.7-rancher, even after remove prefix v,
+      // // utils.versionCompare returns NaN, because of suffix. So, its needed to
+      // // take only the version parts
+      // const regexp = /v?(\d+\.\d+\.\d+)(\-[A-Za-z]*)?/g;
+      // const v1Part = Array.from(v1.matchAll(regexp), m => m[1])[0];
+      // const v2Part = Array.from(v2.matchAll(regexp), m => m[1])[0];
 
-      return utils.versionCompare(v1Part, v2Part) > 0;
+      // return utils.versionCompare(v1Part, v2Part) > 0;
+      return v1 > v2;
     }
 
   }
