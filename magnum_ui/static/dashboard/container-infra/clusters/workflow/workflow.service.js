@@ -400,36 +400,6 @@
                       title: gettext('Kubernetes API Loadbalancer'),
                       items: [
                         {
-                          key: 'master_lb_enabled',
-                          type: 'checkbox',
-                          title: gettext('Enable Load Balancer for Kubernetes API'),
-                          onChange: function(value) {
-                            if (value) {
-                              model.master_count = MODEL_DEFAULTS.master_count;
-                              // Reset values to defaults. They are null after being disabled.
-                              model.master_lb_floating_ip_enabled =
-                                MODEL_DEFAULTS.master_lb_floating_ip_enabled;
-                              model.api_master_lb_allowed_cidrs =
-                                MODEL_DEFAULTS.api_master_lb_allowed_cidrs;
-                            } else {
-                              // Without master_lb_enabled, we can only support
-                              // a single master node.
-                              model.master_count = 1;
-                            }
-                            model.isSingleMasterNode = !value;
-                          }
-                        },
-                        {
-                          key: 'master_lb_floating_ip_enabled', // formerly floating_ip_enabled
-                          type: 'select',
-                          title: gettext('Floating IP'),
-                          titleMap: [
-                            {value: false, name: gettext('Accessible on private network only')},
-                            {value: true, name: gettext('Accessible with public floating IP')}
-                          ],
-                          condition: 'model.master_lb_enabled === true'
-                        },
-                        {
                           key: 'api_master_lb_allowed_cidrs',
                           type: 'text',
                           title: gettext('Allowed CIDRs'),
@@ -441,21 +411,7 @@
                             invalidFormat: function(cidrString) {
                               return cidrString === '' || REGEXP_CIDR_LIST.test(cidrString);
                             }
-                          },
-                          condition: 'model.master_lb_enabled === true',
-                        },
-                        // Warning message when Kubernetes API has a Floating IP
-                        {
-                          type: 'template',
-                          template: '<div class="alert alert-warning">' +
-                            '<span class="fa fa-warning"></span> ' +
-                            gettext('A public floating IP will mean the Kubernetes API is ' +
-                              'publically routable on the internet. It is generally not ' +
-                              'recommended to give public access to the Kubernetes API. ' +
-                              'Consider limiting the access using the Allowed CIDRs ' +
-                              'section.') +
-                            '</div>',
-                          condition: 'model.master_lb_floating_ip_enabled == true'
+                          }
                         }
                       ]
                     },
