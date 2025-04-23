@@ -143,15 +143,15 @@
             type: 'string'
           },
           'docker_storage_driver': {
-            title: gettext('Docker Storage Driver'),
+            title: gettext('Container Storage Driver'),
             type: 'string'
           },
           'docker_volume_size': {
-            title: gettext('Docker Volume Size (GB)'),
+            title: gettext('Container Volume Size (GB)'),
             type: 'number',
             'x-schema-form': {
               type: 'number',
-              placeholder: gettext('Specify the size in GB for the docker volume')
+              placeholder: gettext('Specify the size in GB for the container volume')
             }
           },
           'insecure_registry': {

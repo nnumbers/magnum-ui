@@ -24,11 +24,9 @@
         <dd>{$ ctrl.cluster.node_count $}</dd>
         <dt translate>API Address</dt>
         <dd>{$ ctrl.cluster.api_address $}</dd>
-        <dt translate>Master Addresses</dt>
-        <dd ng-if="ctrl.objLen(ctrl.cluster.master_addresses) === 0" translate>None</dd>
+        <dt ng-if="ctrl.objLen(ctrl.cluster.master_addresses) > 0" translate>Master Addresses</dt>
         <dd ng-repeat="addr in ctrl.cluster.master_addresses">{$ addr $}</dd>
-        <dt translate>Node Addresses</dt>
-        <dd ng-if="ctrl.objLen(ctrl.cluster.node_addresses) === 0" translate>None</dd>
+        <dt ng-if="ctrl.objLen(ctrl.cluster.node_addresses) > 0" translate>Node Addresses</dt>
         <dd ng-repeat="addr in ctrl.cluster.node_addresses">{$ addr $}</dd>
       </dl>
     </div>
@@ -53,7 +51,7 @@
         </dd>
         <dt translate>Keypair</dt>
         <dd>{$ ctrl.cluster.keypair $}</dd>
-        <dt translate>Docker Volume Size</dt>
+        <dt translate>Container Volume Size</dt>
         <dd>{$ ctrl.cluster.docker_volume_size | noValue $} GB</dd>
         <dt translate>Master Flavor ID</dt>
         <dd>{$ ctrl.cluster.master_flavor_id | noValue $}</dd>
