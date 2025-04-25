@@ -122,7 +122,7 @@
       function setLabelResponseAsDefault(labelKey, modelKey, isValueBoolean) {
         if (template.labels[labelKey] !== null) {
           $scope.model[modelKey] = isValueBoolean
-            ? template.labels[labelKey] === 'true'
+            ? template.labels[labelKey].toLowerCase() === 'true'
             : template.labels[labelKey];
         }
       }
