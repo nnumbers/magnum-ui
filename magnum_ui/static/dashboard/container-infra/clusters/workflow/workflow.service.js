@@ -274,6 +274,7 @@
                           title: gettext('Number of Worker Nodes'),
                           placeholder: gettext('The number of worker nodes for the cluster'),
                           required: true,
+                          condition: 'model.auto_scaling_enabled === false',
                           onChange: autosetScalingModelValues
                         },
                         {
