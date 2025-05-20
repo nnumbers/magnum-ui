@@ -11,8 +11,8 @@
       </dl>
       <dl class="col-md-2">
         <dt translate>Node Count</dt>
-        <dd ng-if="item.auto_scaling_enabled === 'false'" translate>{$ item.node_count $}</dd>
-        <dd ng-if="item.auto_scaling_enabled === 'true'" translate>{$ item.min_node_count $}-{$ item.max_node_count $}</dd>
+        <dd ng-if="!item.auto_scaling_enabled" translate>{$ item.node_count $}</dd>
+        <dd ng-if="item.auto_scaling_enabled" translate>{$ item.min_node_count $}-{$ item.max_node_count $}</dd>
       </dl>
       <dl class="col-md-2">
         <dt translate>Keypair</dt>
