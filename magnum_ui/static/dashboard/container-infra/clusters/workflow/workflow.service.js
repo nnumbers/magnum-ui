@@ -158,7 +158,7 @@
 
       var isAutoScalingEnabledWatcher = $scope.$watch(
         function() { return model.auto_scaling_enabled; },
-        function(isSingle) {
+        function(isEnabled) {
           if (typeof isEnabled !== 'undefined') {
             formWorkerNodeCount.readonly = isEnabled;
           }
@@ -309,13 +309,16 @@
                             model.min_node_count = MODEL_DEFAULTS.min_node_count;
                             model.max_node_count = MODEL_DEFAULTS.max_node_count;
 
-                            if (isAutoScaling) { setNodeCountModelValue(); }
+                            setNodeCountModelValue();
                           }
                         },
                         {
                           key: 'min_node_count',
                           title: gettext('Minimum Number of Worker Nodes'),
                           placeholder: gettext('Minimum Number of Worker Nodes'),
+                          onChange: function(minNodeCount) {
+                            setNodeCountModelValue();
+                          },
                           validationMessage: {
                             101: gettext('You cannot auto-scale to less than ' +
                               'a single Worker Node.'),
@@ -337,6 +340,9 @@
                           key: 'max_node_count',
                           title: gettext('Maximum number of Worker Nodes'),
                           placeholder: gettext('Maximum number of Worker Nodes'),
+                          onChange: function(maxNodeCount) {
+                            setNodeCountModelValue();
+                          },
                           validationMessage: {
                             101: gettext('The maximum number of Worker Nodes a new cluster ' +
                               'can auto-scale to cannot be less than the total amount of ' +
