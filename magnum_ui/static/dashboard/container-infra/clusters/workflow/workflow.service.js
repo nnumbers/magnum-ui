@@ -591,7 +591,7 @@
       function setNodeCountModelValue() {
         
         if (model.auto_scaling_enabled) {
-          model.node_count = model.min_node_count + 1;
+          model.node_count = model.min_node_count;
         }
       }
 
