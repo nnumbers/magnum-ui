@@ -552,8 +552,13 @@
       }
 
       function autosetScalingModelValues() {
+        
+        if (!model.node_count && model.auto_scaling_enabled) {
+          model.node_count = model.min_node_count;
+        }
         var nodeCount = model.node_count;
-        if (nodeCount && nodeCount > 0 && model.auto_scaling_enabled) {
+        
+        if ( nodeCount > 0 && model.auto_scaling_enabled) {
 
           // Set defaults to related modal fields (have they not been changed)
           if (model.min_node_count === MODEL_DEFAULTS.min_node_count) {
