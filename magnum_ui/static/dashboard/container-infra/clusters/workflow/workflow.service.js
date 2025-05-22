@@ -148,6 +148,23 @@
         },
         true);
 
+      var formWorkerNodeCount = {
+            key: 'node_count',
+            title: gettext('Number of Worker Nodes'),
+            placeholder: gettext('The number of worker nodes for the cluster'),
+            required: true,
+            onChange: autosetScalingModelValues
+          };
+
+      var isAutoScalingEnabledWatcher = $scope.$watch(
+        function() { return model.auto_scaling_enabled; },
+        function(isSingle) {
+          if (typeof isEnabled !== 'undefined') {
+            formWorkerNodeCount.readonly = isEnabled;
+          }
+        },
+        false);
+
       form = [
         {
           type:'tabs',
@@ -269,14 +286,7 @@
                       type: 'fieldset',
                       title: gettext('Worker Nodes'),
                       items: [
-                        {
-                          key: 'node_count',
-                          title: gettext('Number of Worker Nodes'),
-                          placeholder: gettext('The number of worker nodes for the cluster'),
-                          required: true,
-                          condition: 'model.auto_scaling_enabled === false',
-                          onChange: autosetScalingModelValues
-                        },
+                        formWorkerNodeCount,
                         {
                           key: 'flavor_id',
                           title: gettext('Flavor of Worker Nodes'),
@@ -673,6 +683,7 @@
 
       $scope.$on('$destroy', function() {
         isSingleMasterNodeWatcher();
+        isAutoScalingEnabledWatcher();
       });
 
       // Fetch all the dependencies from APIs and return Promise
