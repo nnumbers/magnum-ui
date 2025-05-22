@@ -153,7 +153,7 @@
             title: gettext('Number of Worker Nodes'),
             placeholder: gettext('The number of worker nodes for the cluster'),
             required: true,
-            onChange: autosetScalingModelValues
+            onChange: setAutoScalingModelValues
           };
 
       var isAutoScalingEnabledWatcher = $scope.$watch(
@@ -309,7 +309,7 @@
                             model.min_node_count = MODEL_DEFAULTS.min_node_count;
                             model.max_node_count = MODEL_DEFAULTS.max_node_count;
 
-                            if (isAutoScaling) { autosetScalingModelValues(); }
+                            if (isAutoScaling) { setNodeCountModelValue(); }
                           }
                         },
                         {
@@ -561,11 +561,8 @@
         };
       }
 
-      function autosetScalingModelValues() {
-        
-        if (!model.node_count && model.auto_scaling_enabled) {
-          model.node_count = model.min_node_count;
-        }
+      function setAutoScalingModelValues() {
+
         var nodeCount = model.node_count;
         
         if ( nodeCount > 0 && model.auto_scaling_enabled) {
@@ -582,6 +579,13 @@
           } else if (nodeCount > model.max_node_count) {
             model.max_node_count = nodeCount;
           }
+        }
+      }
+
+      function setNodeCountModelValue() {
+        
+        if (model.auto_scaling_enabled) {
+          model.node_count = model.min_node_count + 1;
         }
       }
 
