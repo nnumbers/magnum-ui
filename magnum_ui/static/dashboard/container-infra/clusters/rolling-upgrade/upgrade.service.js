@@ -100,7 +100,7 @@
         formModel.worker_nodes = cluster.node_count;
 
         // must match cluster.kube_tag
-        activeTemplateVersion = cluster.labels.coe_version;
+        activeTemplateVersion = cluster.coe_version;
         activeTemplateId = cluster.cluster_template_id;
       }
 
