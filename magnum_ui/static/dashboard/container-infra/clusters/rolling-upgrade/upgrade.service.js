@@ -99,7 +99,8 @@
         formModel.master_nodes = cluster.master_count;
         formModel.worker_nodes = cluster.node_count;
 
-        activeTemplateVersion = cluster.labels.kube_tag;
+        // must match cluster.kube_tag
+        activeTemplateVersion = cluster.labels.coe_version;
         activeTemplateId = cluster.cluster_template_id;
       }
 
@@ -110,7 +111,7 @@
 
         // Only load templates that are greater than the current template (kube tag comparison)
         clusterTemplates.forEach(function(template) {
-          if (isVersionGreater(template.labels.kube_tag, activeTemplateVersion)) {
+          if (isVersionGreater(template.labels.coe_version, activeTemplateVersion)) {
             clusterTemplatesTitleMap.push({
               value: template.id,
               name: template.name
