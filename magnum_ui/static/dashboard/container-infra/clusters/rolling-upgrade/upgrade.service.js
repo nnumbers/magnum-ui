@@ -112,7 +112,7 @@
         // Order templates by name in descending order
         // Sort them before filter
         clusterTemplates.sort(function(firstTemplate, secondTemplate) {
-          return template.labels.kube_tag < template.labels.kube_tag ? 1 : -1;
+          return firstTemplate.labels.kube_tag < secondTemplate.labels.kube_tag ? 1 : -1;
         });
 
         // Only load templates that are greater than the current template (kube tag comparison)
