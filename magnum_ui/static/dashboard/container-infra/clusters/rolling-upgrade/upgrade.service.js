@@ -111,7 +111,7 @@
 
         // Only load templates that are greater than the current template (kube tag comparison)
         clusterTemplates.forEach(function(template) {
-          if (isVersionGreater(template.labels.coe_version, activeTemplateVersion)) {
+          if (isVersionGreater(template.labels.kube_tag, activeTemplateVersion)) {
             clusterTemplatesTitleMap.push({
               value: template.id,
               name: template.name
