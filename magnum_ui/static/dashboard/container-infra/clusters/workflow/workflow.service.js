@@ -640,6 +640,9 @@
         angular.forEach(response.data.items, function(clusterTemplate) {
           templateTitleMap.push({value: clusterTemplate.id, name: clusterTemplate.name});
         });
+        templateTitleMap.sort(function(firstTemplate, secondTemplate) {
+          return firstTemplate.name < secondTemplate.name ? -1 : 1;
+        });
       }
 
       function onGetNetworks(response) {
