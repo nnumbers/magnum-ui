@@ -109,9 +109,9 @@
               if (isConditionalAction(action.context.id)) {
                 var actionElement = angular.element(actionElementsList[actionIndex]);
                 // If the status is not allowed - add disabling class
-                if (isAllowedStatus(item.status) ) {
+                if (isAllowedStatus(item.status)) {
                   actionElement.removeClass(DISABLED_CLASS_NAME);
-                } else if (item.health_status.indexOf( 'UNHEALTHY' ) > -1){
+                } else {
                   actionElement.addClass(DISABLED_CLASS_NAME);
                 }
               }
