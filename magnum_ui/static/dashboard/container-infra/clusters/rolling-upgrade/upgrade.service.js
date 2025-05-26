@@ -109,6 +109,12 @@
 
         var startingTemplatesTitleMapLength = clusterTemplatesTitleMap.length;
 
+        // Order templates by name in descending order
+        // Sort them before filter
+        clusterTemplates.sort(function(firstTemplate, secondTemplate) {
+          return template.labels.kube_tag < template.labels.kube_tag ? 1 : -1;
+        });
+
         // Only load templates that are greater than the current template (kube tag comparison)
         clusterTemplates.forEach(function(template) {
           if (isVersionGreater(template.labels.kube_tag, activeTemplateVersion)) {
@@ -117,11 +123,6 @@
               name: template.name
             });
           }
-        });
-
-        // Order templates by name in descending order
-        clusterTemplatesTitleMap.sort(function(firstTemplate, secondTemplate) {
-          return firstTemplate.name < secondTemplate.name ? 1 : -1;
         });
 
         // If nothing has been added to the map => already on latest template
