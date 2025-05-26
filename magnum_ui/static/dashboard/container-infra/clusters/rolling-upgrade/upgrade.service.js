@@ -112,12 +112,12 @@
         // Order templates by name in descending order
         // Sort them before filter
         clusterTemplates.sort(function(firstTemplate, secondTemplate) {
-          return firstTemplate.labels.kube_tag < secondTemplate.labels.kube_tag ? 1 : -1;
+          return compareVersion(firstTemplate.labels.kube_tag, secondTemplate.labels.kube_tag );
         });
 
         // Only load templates that are greater than the current template (kube tag comparison)
         clusterTemplates.forEach(function(template) {
-          if (isVersionGreater(template.labels.kube_tag, activeTemplateVersion)) {
+          if (compareVersion(template.labels.kube_tag, activeTemplateVersion) >=0) {
             clusterTemplatesTitleMap.push({
               value: template.id,
               name: template.name
@@ -217,8 +217,10 @@
         .result;
     }
 
-    function isVersionGreater(v1, v2) {
-      if (!v1 || !v2) { return false; }
+    function compareVersion(v1, v2) {
+      if (!v1 && !v2) { return 0; }
+      if (!v1) { return -1; }
+      if (!v2) { return 1; }
 
       // when the values are like v1.26.7-rancher, even after remove prefix v,
       // utils.versionCompare returns NaN, because of suffix. So, its needed to
@@ -227,9 +229,7 @@
       const v1Part = Array.from(v1.matchAll(regexp), m => m[1])[0];
       const v2Part = Array.from(v2.matchAll(regexp), m => m[1])[0];
 
-      return utils.versionCompare(v1Part, v2Part) == -1;
-      
-      // return v1 > v2;
+      return utils.versionCompare(v1Part, v2Part, null);
     }
 
   }
