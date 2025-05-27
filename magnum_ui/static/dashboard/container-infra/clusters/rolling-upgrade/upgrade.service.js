@@ -241,8 +241,8 @@
       const kubeTag = Array.from(template.labels.kube_tag.matchAll(regexp1), m => m[1])[0];
       const previousAllowedTag = Array.from(template.labels.previous_kube_tag.matchAll(regexp2), m => m[1])[0];
       
-      return utils.versionCompare(versionPart1, kubeTag, null) > 0 
-          || utils.versionCompare(versionPart2, previousAllowedTag, null) >= 0;
+      return utils.versionCompare(versionPart1, kubeTag, null) < 0 
+          && utils.versionCompare(versionPart2, previousAllowedTag, null) >= 0;
     }
 
   }
