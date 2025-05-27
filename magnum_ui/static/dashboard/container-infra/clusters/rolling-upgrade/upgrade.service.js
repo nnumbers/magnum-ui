@@ -234,12 +234,15 @@
 
     function matchPreviosAndActual( template, version ) {
 
-      const regexp = /v?(\d+\.\d+)(\.\d+\-[A-Za-z]*)?/g;
-      const versionPart = Array.from(version.matchAll(regexp), m => m[1])[0];
-      const kubeTag = Array.from(template.labels.kube_tag.matchAll(regexp), m => m[1])[0];
-      const previousAlloedTag = Array.from(template.labels.previous_kube_tag.matchAll(regexp), m => m[1])[0];
-
-      return utils.versionCompare(versionPart, kubeTag, null) == 0 || utils.versionCompare(versionPart, previousAlloedTag, null) <= 0;
+      const regexp1 = /v?(\d+\.\d+\.\d+)(\-[A-Za-z]*)?/g;
+      const regexp2 = /v?(\d+\.\d+)(\.\d+(\-[A-Za-z]*)?)?/g;
+      const versionPart1 = Array.from(version.matchAll(regexp1), m => m[1])[0];
+      const versionPart2 = Array.from(version.matchAll(regexp2), m => m[1])[0];
+      const kubeTag = Array.from(template.labels.kube_tag.matchAll(regexp1), m => m[1])[0];
+      const previousAllowedTag = Array.from(template.labels.previous_kube_tag.matchAll(regexp2), m => m[1])[0];
+      
+      return utils.versionCompare(versionPart1, kubeTag, null) === 0 
+          || utils.versionCompare(versionPart2, previousAllowedTag, null) > 0;
     }
 
   }
