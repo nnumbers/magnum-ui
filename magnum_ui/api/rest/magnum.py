@@ -145,20 +145,22 @@ class ClusterTemplates(generic.View):
             settings, "CLUSTER_TEMPLATE_GROUP_FILTERS", None)
         related_to_id = request.GET.get("related_to")
 
-        if template_filters and related_to_id:
+        if template_filters:
             templates_by_id = {t.uuid: t for t in templates}
             related_to = templates_by_id.get(related_to_id)
 
-            if related_to:
-                matched_groups = []
-                groups = defaultdict(list)
-                for group, regex in template_filters.items():
-                    pattern = re.compile(regex)
+            matched_groups = []
+            groups = defaultdict(list)
+            for group, regex in template_filters.items():
+                pattern = re.compile(regex)
+                if related_to:
                     if pattern.match(related_to.name):
                         matched_groups.append(group)
-                    for template in templates:
-                        if pattern.match(template.name):
-                            groups[group].append(template)
+                else:
+                    matched_groups.append(group)
+                for template in templates:
+                    if pattern.match(template.name):
+                        groups[group].append(template)
 
                 if matched_groups:
                     new_templates = []
