@@ -522,11 +522,19 @@
     }
 
     function onGetImages(response) {
-      images = [{value:"", name: gettext("Choose an Image")}];
+      images = [{value: "", name: gettext("Choose an Image")}];
       angular.forEach(response.data.items, function(item) {
         if (!angular.isUndefined(item.properties) &&
-          distros.indexOf(item.properties.os_distro) >= 0) {
-          images.push({value: item.name, name: item.name});
+            distros.indexOf(item.properties.os_distro) >= 0) {
+          // Improved: value = stable ID, display = human-readable name
+          var displayName = item.name;
+          if (item.id && item.id !== item.name) {
+            displayName += ' (' + item.id.substring(0, 8) + '...)';
+          }
+          images.push({
+            value: item.id,      // Change to ID (recommended)
+            name: displayName
+          });
         }
       });
       form[0].tabs[1].items[0].items[0].items[0].titleMap = images;
